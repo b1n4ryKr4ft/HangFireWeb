@@ -36,7 +36,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseHangfireDashboard("hangfire", new DashboardOptions()
+app.UseHangfireDashboard("/hangfire", new DashboardOptions()
 {
     DashboardTitle = "Drivers Dashboard",
     Authorization = new[]{
