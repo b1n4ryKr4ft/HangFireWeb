@@ -1,6 +1,7 @@
 using FireApp.Services;
 using Hangfire;
 using Hangfire.Storage.SQLite;
+using HangfireBasicAuthenticationFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("hangfire", new DashboardOptions()
+{
+    DashboardTitle = "Drivers Dashboard",
+    Authorization = new[]{
+        new HangfireCustomBasicAuthenticationFilter(){
+            Pass ="pr0j3ct-d33pd1v3",
+            User = "cyb3rkr4ft3r"
+        }
+    }
+});
 app.MapHangfireDashboard();
 
 RecurringJob.AddOrUpdate<IServiceManagement>(x => x.SyncData(), "0 * * ? * *");
